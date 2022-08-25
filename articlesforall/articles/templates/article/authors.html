@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+	{% for author in authors %}
+
+		<h2><a href="{% url 'author-page' author.id %}">{{author.name}}</a> - {{author.age}}</h2>
+
+
+	{% endfor %}
+
+
+{% endblock %}
