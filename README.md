@@ -1,2 +1,2 @@
 # Articles4All-Django-Website
-creating &amp; testing my website my little resume ^_^
+creating &amp; testing my website
