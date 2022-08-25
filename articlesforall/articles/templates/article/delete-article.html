@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+	
+
+	<div>
+		
+
+		<form method="POST" action="">
+
+			{% csrf_token %}
+
+			<h3>Are you sure you want to delete the article "{{article.title}}" from {{article.author.name}} ?</h3>
+			
+			<a href="{% url 'articles-page' %}">Cancel</a>
+
+			<input type="submit" value="Submit">
+
+		
+		</form>
+
+	</div>
+
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+	{% for article in articles  %}
+
+
+		<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.author}}</h2>
+		<small><a href="{% url 'delete-article' article.id %}">delete</a></small>
+		<hr>
+	{% endfor %}
+
+
+
+{% endblock %}
