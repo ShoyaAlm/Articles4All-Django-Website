@@ -1,18 +1,41 @@
 from django.shortcuts import render, redirect, reverse 
 from django.http import HttpResponse
 
+from django.views import View
+
 from .models import Author, Article
 
 from .forms import ArticleForm
 
 
-def homePage(request):
 
-	articles = Article.objects.all()
 
-	context = {'articles': articles}
 
-	return render(request, "article/home-page.html", context)
+class ArticleListView(View):
+
+	template_name = 'article/articles.html'
+
+	query_set = Article.objects.all()
+
+
+	def get_queryset(self):
+		return self.query_set
+
+	def get(self, request, *args, **kwargs):
+
+		context = {'object': self.get_queryset()}
+		
+		return render(request, self.template_name, context)
+
+
+
+# def homePage(request):
+
+# 	articles = Article.objects.all()
+
+# 	context = {'articles': articles}
+
+# 	return render(request, "article/home-page.html", context)
 
 
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$

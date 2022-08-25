@@ -2,7 +2,9 @@ from django.urls import path
 
 from .views import (
 
-	homePage,
+	# homePage,
+	ArticleListView,
+
 	authors,
 	profile,
 	article,
@@ -16,7 +18,9 @@ from .views import (
 
 urlpatterns = [
 
-	path('', homePage, name='home-page'),
+	# path('', homePage, name='home-page'),
+	path('', ArticleListView.as_view(), name='home-page'),
+	
 	path('author/', authors, name='authors-page'),
 	path('author/<int:id>', profile, name='author-page'),
 
