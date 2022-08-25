@@ -3,7 +3,7 @@
 
 {% block content %}
 
-	{% for article in articles  %}
+	{% for article in object  %}
 
 
 		<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.author}}</h2>
