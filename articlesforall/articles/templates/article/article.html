@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% include 'base.html' %}
 
 
 {% block content %}
 
 
-		<h1>{{article.title}} - {{article.author}}</h1>
+		<h1>{{object.title}} - {{object.author}}</h1>
 		<br>
-		<h3>{{article.body}}</h3>
+		<h3>{{object.body}}</h3>
 
 {% endblock %}

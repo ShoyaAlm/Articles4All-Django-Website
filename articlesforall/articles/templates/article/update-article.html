@@ -6,12 +6,12 @@
 	
 
 	<div>
-		
-		<form method="POST" action="">
+		<h1>Update : {{object.title}} - {{object.author}} </h1>
+		<form method='POST' action=''>
 			{% csrf_token %}
 
 			{{form.as_p}}
-			<input type="submit" value="Submit">
+			<input type='submit' value='Save'>
 
 
 
