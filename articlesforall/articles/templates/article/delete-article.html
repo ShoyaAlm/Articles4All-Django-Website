@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% include 'base.html' %}
 
 
 
@@ -12,9 +12,9 @@
 
 			{% csrf_token %}
 
-			<h3>Are you sure you want to delete the article "{{article.title}}" from {{article.author.name}} ?</h3>
-			
-			<a href="{% url 'articles-page' %}">Cancel</a>
+			<h3>Are you sure you want to delete the article "{{object.title}}" from {{object.author.name}} ?</h3>
+		
+			<a href="../">Cancel</a>
 
 			<input type="submit" value="Submit">
 

@@ -10,10 +10,17 @@ from .forms import ArticleForm
 
 
 
+def homePage(request):
+
+	context = {}
+
+	return render(request, "article/home-page.html", context)
+
+
 
 class ArticleListView(View):
 
-	template_name = 'article/home-page.html'
+	template_name = 'article/articles.html'
 
 	query_set = Article.objects.all()
 
@@ -26,16 +33,6 @@ class ArticleListView(View):
 		context = {'object': self.get_queryset()}
 
 		return render(request, self.template_name, context)
-
-
-
-# def homePage(request):
-
-# 	articles = Article.objects.all()
-
-# 	context = {'articles': articles}
-
-# 	return render(request, "article/home-page.html", context)
 
 
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
@@ -61,44 +58,26 @@ class AuthorListView(View):
 		return render(request, self.template_name, context)
 
 
-# def authors(request):
-
-# 	authors = Author.objects.all()
-
-# 	context = {'authors': authors}
-
-# 	return render(request, "article/authors.html", context)
-
-
 
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
-class AuthorView(View): 	### THIS FUNCTION WORKS FOR SEARCHING 1 OR MORE AUTHORS
-	
+class AuthorView(View): 	
+
 	template_name = 'article/profile.html'
-
-	
 
 	def get(self, request, id=None, *args, **kwargs):
 
 		if id is not None:
-			# query_set = Article.objects.get(id=id)
-			obj = get_object_or_404(Article, id=id)
+			obj = get_object_or_404(Author, id=id)
 		
-		context = {'object': self.obj}
+		context = {'object': obj}
 
 		return render(request, self.template_name, context)
 
-# def profile(request, id):
 
-# 	author = Author.objects.get(id=id)
-
-# 	context = {'author': author}
-
-# 	return render(request, "article/profile.html", context)
 
 
 
@@ -106,82 +85,171 @@ class AuthorView(View): 	### THIS FUNCTION WORKS FOR SEARCHING 1 OR MORE AUTHORS
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
+class ArticleListView(View):
 
-def article(request):
-
-	articles = Article.objects.all()
-
-	context = {'articles': articles}
-
-	return render(request, "article/articles.html", context)
+	template_name = 'article/articles.html'
 
 
+	query_set = Article.objects.all()
 
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+	def get_queryset(self):
 
-def getArticle(request, id):
-
-	article = Article.objects.get(id=id)
-
-	context = {'article': article}
-
-	return render(request, "article/article.html", context)
-
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+		return self.query_set
 
 
 
-def createArticle(request):
-
-	form = ArticleForm()
-
-	if request.method == 'POST':
-		form = ArticleForm(request.POST)
-		if form.is_valid():
-			form.save()
-		return redirect('articles-page')
-
-	context = {'form': form}
-	return render(request, "article/create-article.html", context)
-
-
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-
-def updateArticle(request, id):
-
-	article = Article.objects.get(id=id)
-	
-	form = ArticleForm(instance=article)
-
-
-	if request.method == 'POST':
-
-		form = ArticleForm(request.POST, instance=article)
+	def get(self, request, *args, **kwargs):
 		
+		context = {'object': self.get_queryset()}
+		return render(request, self.template_name, context)
+
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+
+
+class ArticleView(View):
+
+	template_name = 'article/article.html'
+
+
+	def get(self, request, id=None, *args, **kwargs):
+		
+		obj = get_object_or_404(Article, id=id)
+
+		context = {'object': obj}
+
+		return render(request, self.template_name, context)
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+
+
+
+
+class CreateArticleView(View):
+
+	template_name = 'article/create-article.html'
+
+
+	def get(self, request, *args, **kwargs):
+
+		form = ArticleForm()
+		context = {'form': form}
+
+		return render(request, self.template_name, context)
+
+
+	def post(self, request, *args, **kwargs):
+
+
+		form = ArticleForm(request.POST)
+
 		if form.is_valid():
 			form.save()
-			form = ArticleForm()
 			return redirect('articles-page')
+			
+		context = {'form': form}
+		
+		return render(request, self.template_name, context)
 
 
-	context = {'form': form}
-	return render(request, "article/create-article.html", context)
 
 
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$	
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
-def deleteArticle(request, id):
+class UpdateArticleView(View):
+
+	template_name = 'article/update-article.html'
 
 
-	article = Article.objects.get(id=id)
+	def get_object(self):
+		id = self.kwargs.get('id')
+		obj = None
+		if id is not None:
+			obj = get_object_or_404(Article, id=id)
+			return obj
 
-	if request.method == 'POST':
-		article.delete()
-		return redirect('articles-page')
 
-	return render(request, "article/delete-article.html", {'article': article})
+	def get(self, request, id=None, *args, **kwargs):
+
+		context = {}
+		article = self.get_object()
+		
+		if article is not None:
+			form = ArticleForm(instance=article)
+			context = {'object': article ,'form': form }
+	
+
+		return render(request, self.template_name, context)
+
+
+	def post(self, request, id=None, *args, **kwargs):
+
+		context = {}
+
+		article = self.get_object()
+
+		if article is not None:
+			form = ArticleForm(request.POST, instance=article)
+			if form.is_valid():
+				form.save()
+				form = ArticleForm()
+
+
+		context = {'object': article ,'form': form}
+
+		return render(request, self.template_name, context)
+
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+
+
+class DeleteArticleView(View):
+
+	template_name = 'article/delete-article.html'
+
+	def get_object(self):
+		id = self.kwargs.get('id')
+		obj = None
+		if id is not None:
+			obj = get_object_or_404(Article, id=id)	
+		return obj
+
+
+	def get(self, request, id=None, *args, **kwargs):
+
+		context = {}
+		article = self.get_object()
+		if article is not None:
+			form = ArticleForm(instance=article)
+			
+			context = {'object': article, 'form': form}
+		return render(request, self.template_name, context)
+
+
+	def post(self, request, id=None, *args, **kwargs):
+
+		context = {}
+		article = self.get_object()
+		if article is not None:
+			
+			article.delete()
+			return redirect('articles-page')
+				
+		context = {'object': article}
+
+
+		return render(request, self.template_name, context)
+
