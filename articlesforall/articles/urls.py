@@ -4,7 +4,7 @@ from django.urls import path
 
 from .views import (
 
-	homePage,
+	homePageView,
 	ArticleListView,
 
 	# authors,
@@ -25,11 +25,14 @@ from .views import (
 
 	# deleteArticle,
 	DeleteArticleView,
+
+
+	deleteComment,
 )
 
 urlpatterns = [
 
-	path('', homePage, name='home-page'),
+	path('', homePageView.as_view(), name='home-page'),
 	
 	path('author/', AuthorListView.as_view(), name='author-page'),
 	# path('author/', authors, name='authors-page'),
@@ -54,6 +57,7 @@ urlpatterns = [
 	# path('article/delete/<int:id>', deleteArticle, name='delete-article'),
 	path('article/delete/<int:id>', DeleteArticleView.as_view(), name='delete-article'),
 
+	path('article/delete-comment/<int:id>', deleteComment, name='delete-comment'),
 
 
 ]

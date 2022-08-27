@@ -2,16 +2,46 @@
 
 
 {% block content %}
+	
+<style>
+	.home-container{
+		display: grid;
+		grid-template-columns: 1fr 3fr;
+	}
+</style>
 
+<div class="home-container">
+	
+	<div class="Categories">
+		
+		<h1>Categories</h1>
+		<hr>
+
+		{% for topic in topics %}	
+
+
+		{% endfor %}
+	</div>
+
+
+
+	<div>
+	
 		<a href="{% url 'create-article' %}"><h2>Create Article</h2></a>
 		<hr>
+	
 	{% for article in object  %}
 
-		<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.author}}</h2>
+		<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.topic}}</h2> <small>@{{article.author}} </small>
+		<br>
 		<small><a href="{% url 'update-article' article.id %}">update</a></small> - <small><a href="{% url 'delete-article' article.id %}">delete</a></small>
 		<hr>
 	{% endfor %}
 
+	</div>
+
+
+</div>
 
 
 {% endblock %}

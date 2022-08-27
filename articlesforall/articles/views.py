@@ -3,18 +3,37 @@ from django.http import HttpResponse
 
 from django.views import View
 
-from .models import Author, Article
+from .models import Author, Article, Topic, Comment
 
 from .forms import ArticleForm
 
 
 
 
-def homePage(request):
+class homePageView(View):
 
-	context = {}
+	template_name = 'article/home-page.html'
 
-	return render(request, "article/home-page.html", context)
+
+	def get(self, request, *args, **kwargs):
+
+		q = request.GET.get('q') if request.GET.get('q') != None else ''
+
+		articles = Article.objects.filter(topic__name__icontains=q)
+		
+		topics = Topic.objects.all()
+
+
+		context = {'topics': topics, 'articles': articles}
+
+		return render(request, self.template_name, context)
+
+
+# def homePage(request):
+
+# 	context = {}
+
+# 	return render(request, "article/home-page.html", context)
 
 
 
@@ -119,9 +138,33 @@ class ArticleView(View):
 		
 		obj = get_object_or_404(Article, id=id)
 
-		context = {'object': obj}
+		comments = obj.comment_set.all().order_by('-created')
+
+		context = {'object': obj, 'comments': comments}
 
 		return render(request, self.template_name, context)
+
+
+	def post(self, request, id=None, *args, **kwargs):
+
+		obj = get_object_or_404(Article, id=id)
+
+		article_comments = obj.comment_set.all().order_by('-created')
+
+		comment = Comment.objects.create(
+			user = request.user,
+			article = obj,
+			body = request.POST.get('body')
+		)
+
+		
+		# return redirect('article-page', id=obj.id)
+
+		context = {'object': obj, 'comments': article_comments}
+
+
+		return render(request, self.template_name, context)
+
 
 
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
@@ -147,12 +190,12 @@ class CreateArticleView(View):
 	def post(self, request, *args, **kwargs):
 
 
-		form = ArticleForm(request.POST)
+		form = ArticleForm(request.POST or None)
 
 		if form.is_valid():
 			form.save()
-			return redirect('articles-page')
-			
+			form = ArticleForm()
+
 		context = {'form': form}
 		
 		return render(request, self.template_name, context)
@@ -186,6 +229,7 @@ class UpdateArticleView(View):
 		
 		if article is not None:
 			form = ArticleForm(instance=article)
+
 			context = {'object': article ,'form': form }
 	
 
@@ -199,11 +243,10 @@ class UpdateArticleView(View):
 		article = self.get_object()
 
 		if article is not None:
-			form = ArticleForm(request.POST, instance=article)
+			form = ArticleForm(request.POST or None, instance=article)
 			if form.is_valid():
 				form.save()
 				form = ArticleForm()
-
 
 		context = {'object': article ,'form': form}
 
@@ -253,3 +296,18 @@ class DeleteArticleView(View):
 
 		return render(request, self.template_name, context)
 
+
+
+
+
+def deleteComment(request, id):
+
+	comment = Comment.objects.get(id=id)
+
+	if request.method == 'POST':
+
+		comment.delete()
+		return redirect('article-page', id=comment.article.id)
+
+	context = {'comment': comment}
+	return render(request, "article/delete-comment.html", context)
