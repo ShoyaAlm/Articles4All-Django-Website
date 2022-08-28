@@ -21,7 +21,7 @@
 			<hr>
 
 			<div>
-				<a href="{% url 'articles-page' %}">All</a>
+				<a href="{% url 'home-page' %}">All</a>
 			</div>
 
 			{% for topic in topics %}
@@ -37,16 +37,15 @@
 
 
 		<div>
-			
+
 			{% for article in articles %}
 
-
-					<h2>{{article.title}}</h2> - <small>{{article.author}}</small>
-
-
-
-
+				<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.topic}}</h2> <small>@{{article.author}} </small>
+				<br>
+				<small><a href="{% url 'update-article' article.id %}">update</a></small> - <small><a href="{% url 'delete-article' article.id %}">delete</a></small>
+				<hr>
 			{% endfor %}
+
 
 
 		</div>
