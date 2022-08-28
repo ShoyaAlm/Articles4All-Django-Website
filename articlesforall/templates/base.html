@@ -6,12 +6,13 @@
 </head>
 <body>
 
-	{% block content %}
-
-		<h2>Articles4All</h2>
+		<a href="{% url 'home-page' %}"><h1>Articles4All</h1></a>
+		
+		{% include 'navbar.html' %}
+		
 		<hr>
 
-	{% endblock %}
+	
 
 </body>
 </html>

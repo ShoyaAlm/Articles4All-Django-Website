@@ -1,11 +1,45 @@
-{% extends 'base.html' %}
+{% include 'base.html' %}
 
 
 {% block content %}
 
 
-		<h1>{{article.title}} - {{article.author}}</h1>
+		<h1>{{object.title}} - {{object.author}}</h1>
 		<br>
-		<h3>{{article.body}}</h3>
+		<h3>{{object.body}}</h3>
+
+		<br>
+
+
+		<div class="comment-section">
+
+			<div class="show-comments">
+				<h2>Discussions</h2>
+				<hr>
+				{% for comment in comments %}
+
+					<h3>{{comment.body}}</h3> - <small>@{{comment.user}}</small>
+					<br>
+					<a href="{% url 'delete-comment' comment.id %}">delete</a>
+					<hr>
+				{% endfor %}
+			</div>
+
+
+
+			<div class="add-comment">
+				
+				<form method="POST" action="">
+					
+					{% csrf_token %}
+
+					<input type="text" name='body' placeholder="Write your comment here..." />
+
+				</form>
+
+			</div>
+
+		</div>
+
 
 {% endblock %}

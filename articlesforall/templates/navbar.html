@@ -1,0 +1,22 @@
+
+
+{% block content %}
+
+	<div>
+		
+		<form method="POST" action="{% url 'home-page' %}?q={{article.title}}">
+			
+			{% csrf_token %}
+
+			<input type="text" name="q" placeholder="search article..." />
+
+
+		</form>
+
+
+
+	</div>
+
+
+
+{% endblock %}

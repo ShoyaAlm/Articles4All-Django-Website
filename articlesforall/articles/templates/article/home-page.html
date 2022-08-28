@@ -1,8 +1,57 @@
-{% extends 'base.html' %}
+{% include 'base.html' %}
 
 {% block content %}
+	
+
+<style >
+	
+	.home-container{
+		display: grid;
+		grid-template-columns: 1fr 3fr;
+	}
 
 
-	<h2>Home page still has a lot work to do!!!</h2>
+</style>
+
+	<div class="home-container">
+		
+		<div class="Categories">
+			
+			<h1>Categories</h1>
+			<hr>
+
+			<div>
+				<a href="{% url 'home-page' %}">All</a>
+			</div>
+
+			{% for topic in topics %}
+			
+			<div>
+				<a href="{% url 'home-page' %}?q={{topic.name}}">{{topic.name}}</a>
+				<br>
+			</div>
+			
+			{% endfor %}
+
+		</div>
+
+
+		<div>
+
+			{% for article in articles %}
+
+				<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.topic}}</h2> <small>@{{article.author}} </small>
+				<br>
+				<small><a href="{% url 'update-article' article.id %}">update</a></small> - <small><a href="{% url 'delete-article' article.id %}">delete</a></small>
+				<hr>
+			{% endfor %}
+
+
+
+		</div>
+
+
+
+	</div>
 
 {% endblock %}

@@ -1,2 +1,2 @@
 # Articles4All-Django-Website
-creating &amp; testing my website
+creating & testing my website

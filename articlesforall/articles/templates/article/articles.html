@@ -1,16 +1,51 @@
-{% extends 'base.html' %}
+{% include 'base.html' %}
 
 
 {% block content %}
+	
+<style>
+	.home-container{
+		display: grid;
+		grid-template-columns: 1fr 3fr;
+	}
+</style>
 
+<<<<<<< HEAD
+	{% for article in object  %}
+=======
+<div class="home-container">
+	
+	<div class="Categories">
+		
+		<h1>Categories</h1>
+		<hr>
+
+		{% for topic in topics %}	
+>>>>>>> 64085dee73517d09201c0a8a78b0fcd36e229a55
+
+
+		{% endfor %}
+	</div>
+
+
+
+	<div>
+	
+		<a href="{% url 'create-article' %}"><h2>Create Article</h2></a>
+		<hr>
+	
 	{% for article in object  %}
 
-
-		<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.author}}</h2>
-		<small><a href="{% url 'delete-article' article.id %}">delete</a></small>
+		<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.topic}}</h2> <small>@{{article.author}} </small>
+		<br>
+		<small><a href="{% url 'update-article' article.id %}">update</a></small> - <small><a href="{% url 'delete-article' article.id %}">delete</a></small>
 		<hr>
 	{% endfor %}
 
+	</div>
+
+
+</div>
 
 
 {% endblock %}
