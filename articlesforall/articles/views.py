@@ -2,113 +2,18 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse
 
 from django.views import View
-<<<<<<< HEAD
-
-from .models import Author, Article
-
-from .forms import ArticleForm
-
-
-
-
-
-class ArticleListView(View):
-
-	template_name = 'article/home-page.html'
-
-	query_set = Article.objects.all()
-
-
-	def get_queryset(self):
-		return self.query_set
-
-	def get(self, request, *args, **kwargs):
-
-		context = {'object': self.get_queryset()}
-
-		return render(request, self.template_name, context)
-
-
-
-# def homePage(request):
-
-# 	articles = Article.objects.all()
-
-# 	context = {'articles': articles}
-
-# 	return render(request, "article/home-page.html", context)
-
-
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-
-
-
-
-class AuthorListView(View):
-
-	template_name = 'article/authors.html'
-
-
-	query_set = Author.objects.all()
-
-	def get_queryset(self):
-		return self.query_set
-
-	def get(self, request, *args, **kwargs):
-		
-		context = {'object': self.get_queryset()}
-		return render(request, self.template_name, context)
-
-
-# def authors(request):
-
-# 	authors = Author.objects.all()
-
-# 	context = {'authors': authors}
-
-# 	return render(request, "article/authors.html", context)
-=======
 from .models import Author, Article, Topic, Comment
 from .forms import ArticleForm
 
 
 from django.db.models import Q
->>>>>>> 64085dee73517d09201c0a8a78b0fcd36e229a55
 
 
 
 class homePageView(View):
 
-<<<<<<< HEAD
-
-class AuthorView(View): 	### THIS FUNCTION WORKS FOR SEARCHING 1 OR MORE AUTHORS
-	
-	template_name = 'article/profile.html'
-
-	
-
-	def get(self, request, id=None, *args, **kwargs):
-
-		if id is not None:
-			# query_set = Article.objects.get(id=id)
-			obj = get_object_or_404(Article, id=id)
-		
-		context = {'object': self.obj}
-
-		return render(request, self.template_name, context)
-
-# def profile(request, id):
-
-# 	author = Author.objects.get(id=id)
-
-# 	context = {'author': author}
-
-# 	return render(request, "article/profile.html", context)
-=======
 	template_name = 'article/home-page.html'
->>>>>>> 64085dee73517d09201c0a8a78b0fcd36e229a55
+
 
 
 	def get(self, request, *args, **kwargs):
@@ -143,7 +48,80 @@ class AuthorView(View): 	### THIS FUNCTION WORKS FOR SEARCHING 1 OR MORE AUTHORS
 		return render(request, "article/home-page.html", context)
 
 
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
+
+
+
+class ArticleListView(View):
+
+	template_name = 'article/home-page.html'
+
+	query_set = Article.objects.all()
+
+
+	def get_queryset(self):
+		return self.query_set
+
+	def get(self, request, *args, **kwargs):
+
+		context = {'object': self.get_queryset()}
+
+		return render(request, self.template_name, context)
+
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+
+
+
+
+class AuthorListView(View):
+
+	template_name = 'article/authors.html'
+
+
+	query_set = Author.objects.all()
+
+	def get_queryset(self):
+		return self.query_set
+
+	def get(self, request, *args, **kwargs):
+		
+		context = {'object': self.get_queryset()}
+		return render(request, self.template_name, context)
+
+
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+
+
+
+class AuthorView(View):
+	
+	template_name = 'article/profile.html'
+
+	def get(self, request, id=None, *args, **kwargs):
+
+		if id is not None:
+			obj = get_object_or_404(Article, id=id)
+		
+		context = {'object': self.obj}
+
+		return render(request, self.template_name, context)
+
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
 class ArticleListView(View):
@@ -432,23 +410,4 @@ def deleteComment(request, id):
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
-
-
-# def searchBar(request):
-
-# 	topics = Topic.objects.all()
-
-# 	if request.method == 'POST':
-
-# 		q = request.POST.get('q') if request.POST.get('q') != None else ''
-
-
-# 		articles = Article.objects.filter(Q(title__icontains=q))
-
-
-# 	context = {'articles': articles,
-# 			   'topics': topics
-# 			   }
-
-# 	return render(request, "navbar.html", context)
 
