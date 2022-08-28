@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse
 
 from django.views import View
-
 from .models import Author, Article, Topic, Comment
-
 from .forms import ArticleForm
 
+
+from django.db.models import Q
 
 
 
@@ -29,11 +29,24 @@ class homePageView(View):
 		return render(request, self.template_name, context)
 
 
-# def homePage(request):
+	def post(self, request, *args, **kwargs):
 
-# 	context = {}
+		topics = Topic.objects.all()
 
-# 	return render(request, "article/home-page.html", context)
+		if request.method == 'POST':
+
+			q = request.POST.get('q') if request.POST.get('q') != None else ''
+
+			articles = Article.objects.filter(Q(title__icontains=q))
+
+
+		context = {'articles': articles,
+				   'topics': topics
+				   }
+
+		return render(request, "article/home-page.html", context)
+
+
 
 
 
@@ -299,6 +312,11 @@ class DeleteArticleView(View):
 
 
 
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+
+
 
 def deleteComment(request, id):
 
@@ -311,3 +329,30 @@ def deleteComment(request, id):
 
 	context = {'comment': comment}
 	return render(request, "article/delete-comment.html", context)
+
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+
+
+
+# def searchBar(request):
+
+# 	topics = Topic.objects.all()
+
+# 	if request.method == 'POST':
+
+# 		q = request.POST.get('q') if request.POST.get('q') != None else ''
+
+
+# 		articles = Article.objects.filter(Q(title__icontains=q))
+
+
+# 	context = {'articles': articles,
+# 			   'topics': topics
+# 			   }
+
+# 	return render(request, "navbar.html", context)
+
