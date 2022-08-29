@@ -2,10 +2,10 @@ from django.urls import path
 
 from .views import (
 
-	# RegisterPageView,
-	# LoginPageView,
-	registerPage,
-	loginPage,
+	RegisterPageView,
+	LoginPageView,
+	# registerPage,
+	# loginPage,
 
 	logoutUser,
 
@@ -38,8 +38,13 @@ from .views import (
 
 urlpatterns = [
 	
-	path('register/', registerPage, name='register-page'),
-	path('login/', loginPage, name='login-page'),
+	# path('register/', registerPage, name='register-page'),
+	# path('login/', loginPage, name='login-page'),
+	
+	path('register/', RegisterPageView.as_view(), name='register-page'),
+	path('login/', LoginPageView.as_view(), name='login-page'),
+	
+
 	path('logout/', logoutUser, name='logout-page'),
 	
 	path('', homePageView.as_view(), name='home-page'),

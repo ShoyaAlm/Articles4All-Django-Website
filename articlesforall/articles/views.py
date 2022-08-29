@@ -19,77 +19,24 @@ from django.contrib import messages
 
 
 
-
-
-
-def registerPage(request):
-
-	template_name = 'article/login_register.html'
-
-
-	form = UserCreationForm()
-
-	if request.method == 'POST':
-
-		form = UserCreationForm(request.POST)
-		
-		if form.is_valid():
-			user = form.save(commit=False)
-			user.username = user.username.lower()
-			user.save()
-			login(request, user)
-			return redirect('home-page')
-			
-		else:
-			messages.error(request, "An error occured during registration!")
-
-
-	context = {'form': form}
-
-	return render(request, template_name, context)
-
-
-
-# class RegisterPageView(View):
-
-# 	template_name = 'article/login_register.html'
-
-
-# 	form = UserCreationForm()
-
-# 	def post(self, request, *args, **kwargs):
-
-# 		form = UserCreationForm(request.POST)
-		
-# 		if form.is_valid():
-# 			user = form.save(commit=False)
-# 			user.username = user.username.lower()
-# 			user.save()
-# 			login(request, user)
-# 			return redirect('home-page')
-			
-# 		else:
-# 			messages.error(request, "An error occured during registration!")
-
-
-# 		context = {'form': form}
-
-# 		return render(request, self.template_name, context)
-
-
-
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-
-
-def loginPage(request):
+class LoginPageView(View):
 
 	page = 'login'
 
 	template_name = 'article/login_register.html'
 
-	if request.method == 'POST':
+
+
+	def get(self, request, *args, **kwargs):
+		
+		context = {'page': self.page}
+
+		return render(request, self.template_name, context)
+
+
+
+
+	def post(self, request, *args, **kwargs):
 
 		username = request.POST.get('username').lower()
 		password = request.POST.get('password')
@@ -109,40 +56,9 @@ def loginPage(request):
 			messages.error(request, "username or password does not exist")
 
 
-	context = {'page': page}
+		context = {'page': page}
 
-	return render(request, template_name, context)
-
-
-# class LoginPageView(View):
-
-# 	page = 'login'
-
-# 	template_name = 'article/login_register.html'
-
-# 	def post(self, request, *args, **kwargs):
-
-# 		username = request.POST.get('username').lower()
-# 		password = request.POST.get('password')
-
-# 		try:
-# 			user = User.objects.get(username=username)
-
-# 		except:
-# 			messages.error(request, "An error occured during the Login process")
-
-# 		user = authenticate(request, username=username, password=password)
-
-# 		if user is not None:
-# 			login(request, user)
-# 			return redirect('home-page')
-# 		else:
-# 			messages.error(request, "username or password does not exist")
-
-
-# 		context = {'page': page}
-
-# 		return render(request, self.template_name, context)
+		return render(request, self.template_name, context)
 
 
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
@@ -154,6 +70,51 @@ def logoutUser(request):
 
 	logout(request)
 	return redirect('home-page')
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+
+
+
+
+class RegisterPageView(View):
+
+	template_name = 'article/login_register.html'
+
+
+	def get(self, request, *args, **kwargs):
+
+		form = UserCreationForm()
+
+		context = {'form': form}
+
+		return render(request, self.template_name, context)
+
+
+	def post(self, request, *args, **kwargs):
+
+		form = UserCreationForm(request.POST)
+		
+		if form.is_valid():
+			user = form.save(commit=False)
+			user.username = user.username.lower()
+			user.save()
+			login(request, user)
+			return redirect('home-page')
+			
+		else:
+			messages.error(request, "An error occured during registration!")
+
+
+		context = {'form': form}
+
+		return render(request, self.template_name, context)
+
+
+
+
 
 
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
