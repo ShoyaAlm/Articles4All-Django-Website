@@ -1,14 +1,15 @@
-
-
 from django.urls import path
 
 from .views import (
 
-<<<<<<< HEAD
-	# homePage,
-=======
+	# RegisterPageView,
+	# LoginPageView,
+	registerPage,
+	loginPage,
+
+	logoutUser,
+
 	homePageView,
->>>>>>> 64085dee73517d09201c0a8a78b0fcd36e229a55
 	ArticleListView,
 
 	# authors,
@@ -17,19 +18,11 @@ from .views import (
 	# profile,
 	AuthorView,
 
-<<<<<<< HEAD
-	article,
-	getArticle,
-	createArticle,
-	deleteArticle,
-	updateArticle,
-=======
 	# getArticle,
 	ArticleView,
 
 	# createArticle,
 	CreateArticleView,
->>>>>>> 64085dee73517d09201c0a8a78b0fcd36e229a55
 
 
 	# updateArticle,
@@ -40,25 +33,19 @@ from .views import (
 
 
 	deleteComment,
+
 )
 
 urlpatterns = [
-
-<<<<<<< HEAD
-	# path('', homePage, name='home-page'),
-	path('', ArticleListView.as_view(), name='home-page'),
 	
-	path('author/', AuthorListView.as_view(), name='author-page'),
-	# path('author/', authors, name='authors-page'),
-
-	# path('author/<int:id>', profile, name='author-page'),
-	path('author/<int:id>', AuthorView.as_view(), name='author-page'),
-=======
+	path('register/', registerPage, name='register-page'),
+	path('login/', loginPage, name='login-page'),
+	path('logout/', logoutUser, name='logout-page'),
+	
 	path('', homePageView.as_view(), name='home-page'),
 	
 	path('author/', AuthorListView.as_view(), name='author-page'),
 	# path('author/', authors, name='authors-page'),
->>>>>>> 64085dee73517d09201c0a8a78b0fcd36e229a55
 
 	# path('author/<int:id>', profile, name='author-page'),
 	path('author/<int:id>', AuthorView.as_view(), name='author-page'),
