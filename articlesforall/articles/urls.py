@@ -1,5 +1,8 @@
 from django.urls import path
 
+from django.contrib.auth.decorators import login_required
+
+
 from .views import (
 
 	RegisterPageView,
@@ -64,13 +67,13 @@ urlpatterns = [
 
 
 	# path('article/create/', createArticle, name='create-article'),
-	path('article/create/', CreateArticleView.as_view(), name='create-article'),
+	path('article/create/', login_required(CreateArticleView.as_view(), login_url='login-page'), name='create-article'),
 
 	# path('article/update/<int:id>', updateArticle, name='update-article'),
-	path('article/update/<int:id>', UpdateArticleView.as_view(), name='update-article'),
+	path('article/update/<int:id>', login_required(UpdateArticleView.as_view(), login_url='login-page'), name='update-article'),
 
 	# path('article/delete/<int:id>', deleteArticle, name='delete-article'),
-	path('article/delete/<int:id>', DeleteArticleView.as_view(), name='delete-article'),
+	path('article/delete/<int:id>', login_required(DeleteArticleView.as_view(), login_url='login-page'), name='delete-article'),
 
 	path('article/delete-comment/<int:id>', deleteComment, name='delete-comment'),
 
