@@ -4,15 +4,130 @@ from django.http import HttpResponse
 from django.views import View
 from .models import Author, Article, Topic, Comment
 from .forms import ArticleForm
+####---------------------------
+from django.contrib.auth.models import User
 
+from django.contrib.auth import authenticate, login, logout
+
+from django.contrib.auth.decorators import login_required
 
 from django.db.models import Q
 
+from django.contrib.auth.forms import UserCreationForm
+
+from django.contrib import messages
+
+
+
+
+
+class LoginPageView(View):
+
+	page = 'login'
+
+	template_name = 'article/login_register.html'
+
+
+
+	def get(self, request, *args, **kwargs):
+		
+		context = {'page': self.page}
+
+		return render(request, self.template_name, context)
+
+
+
+
+	def post(self, request, *args, **kwargs):
+
+		username = request.POST.get('username').lower()
+		password = request.POST.get('password')
+
+		try:
+			user = User.objects.get(username=username)
+
+		except:
+			messages.error(request, "An error occured during the Login process")
+
+		user = authenticate(request, username=username, password=password)
+
+		if user is not None:
+			login(request, user)
+			return redirect('home-page')
+		else:
+			messages.error(request, "username or password does not exist")
+
+
+		context = {'page': page}
+
+		return render(request, self.template_name, context)
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+
+
+def logoutUser(request):
+
+	logout(request)
+	return redirect('home-page')
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+
+
+
+
+class RegisterPageView(View):
+
+	template_name = 'article/login_register.html'
+
+
+	def get(self, request, *args, **kwargs):
+
+		form = UserCreationForm()
+
+		context = {'form': form}
+
+		return render(request, self.template_name, context)
+
+
+	def post(self, request, *args, **kwargs):
+
+		form = UserCreationForm(request.POST)
+		
+		if form.is_valid():
+			user = form.save(commit=False)
+			user.username = user.username.lower()
+			user.save()
+			login(request, user)
+			return redirect('home-page')
+			
+		else:
+			messages.error(request, "An error occured during registration!")
+
+
+		context = {'form': form}
+
+		return render(request, self.template_name, context)
+
+
+
+
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
 class homePageView(View):
 
 	template_name = 'article/home-page.html'
+
 
 
 	def get(self, request, *args, **kwargs):
@@ -47,7 +162,80 @@ class homePageView(View):
 		return render(request, "article/home-page.html", context)
 
 
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
+
+
+
+class ArticleListView(View):
+
+	template_name = 'article/home-page.html'
+
+	query_set = Article.objects.all()
+
+
+	def get_queryset(self):
+		return self.query_set
+
+	def get(self, request, *args, **kwargs):
+
+		context = {'object': self.get_queryset()}
+
+		return render(request, self.template_name, context)
+
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+
+
+
+
+class AuthorListView(View):
+
+	template_name = 'article/authors.html'
+
+
+	query_set = Author.objects.all()
+
+	def get_queryset(self):
+		return self.query_set
+
+	def get(self, request, *args, **kwargs):
+		
+		context = {'object': self.get_queryset()}
+		return render(request, self.template_name, context)
+
+
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+
+
+
+class AuthorView(View):
+	
+	template_name = 'article/profile.html'
+
+	def get(self, request, id=None, *args, **kwargs):
+
+		if id is not None:
+			obj = get_object_or_404(Article, id=id)
+		
+		context = {'object': self.obj}
+
+		return render(request, self.template_name, context)
+
+
+
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
+####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
 class ArticleListView(View):
@@ -186,7 +374,7 @@ class ArticleView(View):
 
 
 
-
+# @login_required(login_url='login-page')
 class CreateArticleView(View):
 
 	template_name = 'article/create-article.html'
@@ -222,6 +410,7 @@ class CreateArticleView(View):
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
+# @login_required(login_url='login-page')
 class UpdateArticleView(View):
 
 	template_name = 'article/update-article.html'
@@ -272,6 +461,7 @@ class UpdateArticleView(View):
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
+# @login_required(login_url='login-page')
 class DeleteArticleView(View):
 
 	template_name = 'article/delete-article.html'
@@ -318,6 +508,7 @@ class DeleteArticleView(View):
 
 
 
+@login_required(login_url='login-page')
 def deleteComment(request, id):
 
 	comment = Comment.objects.get(id=id)
@@ -335,24 +526,4 @@ def deleteComment(request, id):
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-
-
-
-# def searchBar(request):
-
-# 	topics = Topic.objects.all()
-
-# 	if request.method == 'POST':
-
-# 		q = request.POST.get('q') if request.POST.get('q') != None else ''
-
-
-# 		articles = Article.objects.filter(Q(title__icontains=q))
-
-
-# 	context = {'articles': articles,
-# 			   'topics': topics
-# 			   }
-
-# 	return render(request, "navbar.html", context)
 

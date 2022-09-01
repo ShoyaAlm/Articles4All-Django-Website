@@ -18,7 +18,18 @@
 		<div class="Categories">
 			
 			<h1>Categories</h1>
+
+			{% if request.user.is_authenticated %}
+
+				<h3>Hello {{request.user}} !</h3>
+				<a href="{% url 'logout-page' %}">logout</a>
+
+			{% else %}
+				<a href="{% url 'login-page' %}">Login</a>
+			{% endif %}
+			
 			<hr>
+
 
 			<div>
 				<a href="{% url 'home-page' %}">All</a>
@@ -42,7 +53,11 @@
 
 				<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.topic}}</h2> <small>@{{article.author}} </small>
 				<br>
+				
+				{% if request.user == article.author %}
 				<small><a href="{% url 'update-article' article.id %}">update</a></small> - <small><a href="{% url 'delete-article' article.id %}">delete</a></small>
+				{% endif %}
+
 				<hr>
 			{% endfor %}
 

@@ -1,8 +1,16 @@
-
-
 from django.urls import path
 
+from django.contrib.auth.decorators import login_required
+
+
 from .views import (
+
+	RegisterPageView,
+	LoginPageView,
+	# registerPage,
+	# loginPage,
+
+	logoutUser,
 
 	homePageView,
 	ArticleListView,
@@ -28,10 +36,20 @@ from .views import (
 
 
 	deleteComment,
+
 )
 
 urlpatterns = [
+	
+	# path('register/', registerPage, name='register-page'),
+	# path('login/', loginPage, name='login-page'),
+	
+	path('register/', RegisterPageView.as_view(), name='register-page'),
+	path('login/', LoginPageView.as_view(), name='login-page'),
+	
 
+	path('logout/', logoutUser, name='logout-page'),
+	
 	path('', homePageView.as_view(), name='home-page'),
 	
 	path('author/', AuthorListView.as_view(), name='author-page'),
@@ -49,13 +67,13 @@ urlpatterns = [
 
 
 	# path('article/create/', createArticle, name='create-article'),
-	path('article/create/', CreateArticleView.as_view(), name='create-article'),
+	path('article/create/', login_required(CreateArticleView.as_view(), login_url='login-page'), name='create-article'),
 
 	# path('article/update/<int:id>', updateArticle, name='update-article'),
-	path('article/update/<int:id>', UpdateArticleView.as_view(), name='update-article'),
+	path('article/update/<int:id>', login_required(UpdateArticleView.as_view(), login_url='login-page'), name='update-article'),
 
 	# path('article/delete/<int:id>', deleteArticle, name='delete-article'),
-	path('article/delete/<int:id>', DeleteArticleView.as_view(), name='delete-article'),
+	path('article/delete/<int:id>', login_required(DeleteArticleView.as_view(), login_url='login-page'), name='delete-article'),
 
 	path('article/delete-comment/<int:id>', deleteComment, name='delete-comment'),
 
