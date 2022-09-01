@@ -8,8 +8,11 @@ from .forms import ArticleForm
 from django.contrib.auth.models import User
 
 from django.contrib.auth import authenticate, login, logout
+<<<<<<< HEAD
 
 from django.contrib.auth.decorators import login_required
+=======
+>>>>>>> main
 
 from django.db.models import Q
 
@@ -527,3 +530,7 @@ def deleteComment(request, id):
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
