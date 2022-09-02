@@ -10,9 +10,7 @@
 	}
 </style>
 
-<<<<<<< HEAD
-	{% for article in object  %}
-=======
+
 <div class="home-container">
 	
 	<div class="Categories">
@@ -20,11 +18,16 @@
 		<h1>Categories</h1>
 		<hr>
 
-		{% for topic in topics %}	
->>>>>>> 64085dee73517d09201c0a8a78b0fcd36e229a55
+		<a href="{% url 'home-page' %}">All</a>
 
+		{% for article in object %}
 
+			<a href="{% url 'home-page' %}?q={{article.topic.name}}">{{article.topic.name}}</a>
+			<br>
 		{% endfor %}
+
+
+
 	</div>
 
 
@@ -38,7 +41,11 @@
 
 		<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.topic}}</h2> <small>@{{article.author}} </small>
 		<br>
+
+		{% if request.user == article.author %}
 		<small><a href="{% url 'update-article' article.id %}">update</a></small> - <small><a href="{% url 'delete-article' article.id %}">delete</a></small>
+		{% endif %}
+		
 		<hr>
 	{% endfor %}
 

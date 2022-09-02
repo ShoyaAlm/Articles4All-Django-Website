@@ -20,13 +20,17 @@
 
 					<h3>{{comment.body}}</h3> - <small>@{{comment.user}}</small>
 					<br>
+					
+					{% if request.user == comment.user %}
 					<a href="{% url 'delete-comment' comment.id %}">delete</a>
+					{% endif %}
+
 					<hr>
 				{% endfor %}
 			</div>
 
 
-
+			{% if request.user.is_authenticated %}
 			<div class="add-comment">
 				
 				<form method="POST" action="">
@@ -38,6 +42,7 @@
 				</form>
 
 			</div>
+			{% endif %}
 
 		</div>
 

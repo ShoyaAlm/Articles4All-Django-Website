@@ -9,6 +9,10 @@ from django.contrib.auth.models import User
 
 from django.contrib.auth import authenticate, login, logout
 
+from django.contrib.auth.decorators import login_required
+
+from django.http import HttpResponse
+
 from django.db.models import Q
 
 from django.contrib.auth.forms import UserCreationForm
@@ -29,6 +33,10 @@ class LoginPageView(View):
 
 	def get(self, request, *args, **kwargs):
 		
+		if request.user.is_authenticated:
+			return redirect('home-page')
+
+
 		context = {'page': self.page}
 
 		return render(request, self.template_name, context)
@@ -56,7 +64,7 @@ class LoginPageView(View):
 			messages.error(request, "username or password does not exist")
 
 
-		context = {'page': page}
+		context = {'page': self.page}
 
 		return render(request, self.template_name, context)
 
@@ -426,6 +434,9 @@ class UpdateArticleView(View):
 		context = {}
 		article = self.get_object()
 		
+		if request.user.username != article.author.name:
+			return HttpResponse('You are not allowed in here!')
+
 		if article is not None:
 			form = ArticleForm(instance=article)
 
@@ -474,6 +485,10 @@ class DeleteArticleView(View):
 
 		context = {}
 		article = self.get_object()
+
+		if request.user.username != article.author.name:
+			return HttpResponse('You are not allowed in here!')
+
 		if article is not None:
 			form = ArticleForm(instance=article)
 			
@@ -503,7 +518,7 @@ class DeleteArticleView(View):
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
-
+@login_required(login_url='login-page')
 def deleteComment(request, id):
 
 	comment = Comment.objects.get(id=id)
