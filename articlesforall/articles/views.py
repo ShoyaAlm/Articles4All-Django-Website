@@ -8,6 +8,11 @@ from .forms import ArticleForm
 from django.contrib.auth.models import User
 
 from django.contrib.auth import authenticate, login, logout
+<<<<<<< HEAD
+
+from django.contrib.auth.decorators import login_required
+=======
+>>>>>>> main
 
 from django.contrib.auth.decorators import login_required
 
@@ -380,7 +385,7 @@ class ArticleView(View):
 
 
 
-
+# @login_required(login_url='login-page')
 class CreateArticleView(View):
 
 	template_name = 'article/create-article.html'
@@ -416,6 +421,7 @@ class CreateArticleView(View):
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
+# @login_required(login_url='login-page')
 class UpdateArticleView(View):
 
 	template_name = 'article/update-article.html'
@@ -469,6 +475,7 @@ class UpdateArticleView(View):
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
+# @login_required(login_url='login-page')
 class DeleteArticleView(View):
 
 	template_name = 'article/delete-article.html'
@@ -518,6 +525,10 @@ class DeleteArticleView(View):
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7ec0989c63f63c864b58cdb5f589b1502554a90a
 @login_required(login_url='login-page')
 def deleteComment(request, id):
 
@@ -537,4 +548,7 @@ def deleteComment(request, id):
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
