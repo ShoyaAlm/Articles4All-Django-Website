@@ -53,17 +53,11 @@
 
 				<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.topic}}</h2> <small>@{{article.author}} </small>
 				<br>
-<<<<<<< HEAD
+
 				{% if request.user.username == article.author.name %}
 				<small><a href="{% url 'update-article' article.id %}">update</a></small> - <small><a href="{% url 'delete-article' article.id %}">delete</a></small>
 				{% endif %}
-=======
-				
-				{% if request.user == article.author %}
-				<small><a href="{% url 'update-article' article.id %}">update</a></small> - <small><a href="{% url 'delete-article' article.id %}">delete</a></small>
-				{% endif %}
-
->>>>>>> 7ec0989c63f63c864b58cdb5f589b1502554a90a
+								
 				<hr>
 			{% endfor %}
 
