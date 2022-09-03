@@ -144,8 +144,9 @@ class homePageView(View):
 		
 		topics = Topic.objects.all()
 
+		activity = Comment.objects.all()
 
-		context = {'topics': topics, 'articles': articles}
+		context = {'topics': topics, 'articles': articles, 'activity': activity}
 
 		return render(request, self.template_name, context)
 
