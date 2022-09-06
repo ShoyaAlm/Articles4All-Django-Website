@@ -73,7 +73,10 @@
 			{% for comment in activity %}
 
 
-				<small>@{{comment.user}} commented on {{comment.article.title}}: </small>
+				<small>@{{comment.user}}  at ({{comment.created|timesince}})</small>
+				<br>
+				<br>
+				<small>replied to artilce "{{comment.article.title}}"</small>
 
 				<h3>{{comment.body}}</h3>
 

@@ -144,7 +144,7 @@ class homePageView(View):
 		
 		topics = Topic.objects.all()
 
-		activity = Comment.objects.all()
+		activity = Comment.objects.filter(Q(article__title__icontains=q))
 
 		context = {'topics': topics, 'articles': articles, 'activity': activity}
 
@@ -161,9 +161,12 @@ class homePageView(View):
 
 			articles = Article.objects.filter(Q(title__icontains=q))
 
+			activity = Comment.objects.filter(Q(article__title__icontains=q))
+
 
 		context = {'articles': articles,
-				   'topics': topics
+				   'topics': topics,
+					'activity': activity,
 				   }
 
 		return render(request, "article/home-page.html", context)
