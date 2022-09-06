@@ -18,7 +18,7 @@
 				<hr>
 				{% for comment in comments %}
 
-					<h3>{{comment.body}}</h3> - <small>@{{comment.user}}</small>
+					<h3>{{comment.body}} - <small>({{comment.created}})</small> </h3> <small>@{{comment.user}}</small>
 					<br>
 					
 					{% if request.user == comment.user %}

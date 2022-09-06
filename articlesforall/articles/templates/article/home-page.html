@@ -69,11 +69,11 @@
 
 		<div class="activities">
 			<h1>Activities</h1>
-
+			<hr>
 			{% for comment in activity %}
 
 
-				<small>@{{comment.user}} commented on {{comment.article}}: </small>
+				<small>@{{comment.user}} commented on {{comment.article.title}}: </small>
 
 				<h3>{{comment.body}}</h3>
 
