@@ -15,37 +15,7 @@
 
 	<div class="home-container">
 		
-		<div class="Categories">
-			
-			<h1>Categories</h1>
-
-			{% if request.user.is_authenticated %}
-
-				<h3>Hello {{request.user}} !</h3>
-				<a href="{% url 'logout-page' %}">logout</a>
-
-			{% else %}
-				<a href="{% url 'login-page' %}">Login</a>
-			{% endif %}
-			
-			<hr>
-
-
-			<div>
-				<a href="{% url 'home-page' %}">All</a>
-			</div>
-
-			{% for topic in topics %}
-			
-			<div>
-				<a href="{% url 'home-page' %}?q={{topic.name}}">{{topic.name}}</a>
-				<br>
-			</div>
-			
-			{% endfor %}
-
-		</div>
-
+		{% include 'article/categories.html' %}
 
 		<div class="articles">
 
@@ -66,30 +36,7 @@
 		</div>
 
 
-
-		<div class="activities">
-			<h1>Activities</h1>
-			<hr>
-			{% for comment in activity %}
-
-
-				<small>@{{comment.user}}  at ({{comment.created|timesince}})</small>
-				<br>
-				<br>
-				<small>replied to artilce "{{comment.article.title}}"</small>
-
-				<h3>{{comment.body}}</h3>
-
-				{% if request.user.username == comment.user.username %}
-				<a href="{% url 'delete-comment' comment.id %}">delete</a>
-				{% endif %}
-
-				<hr>
-
-			{% endfor %}
-
-		</div>
-
+		{% include 'article/activity_component.html' %}
 
 	</div>
 
