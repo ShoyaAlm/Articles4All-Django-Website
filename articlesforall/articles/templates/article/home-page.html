@@ -7,7 +7,7 @@
 	
 	.home-container{
 		display: grid;
-		grid-template-columns: 1fr 3fr 1fr;
+		grid-template-columns: 1.5fr 4fr 1.5fr;
 	}
 
 
@@ -15,7 +15,20 @@
 
 	<div class="home-container">
 		
-		{% include 'article/categories.html' %}
+		<div class="category">
+			
+			{% include 'article/categories.html' %}
+
+			<hr>
+		
+			{% include 'article/discussion.html' %}
+		
+		</div>
+
+<!-- &&&&&&******$$$$$$$$$$$$$$$$ -->
+<!-- &&&&&&******$$$$$$$$$$$$$$$$ -->
+<!-- &&&&&&******$$$$$$$$$$$$$$$$ -->
+<!-- &&&&&&******$$$$$$$$$$$$$$$$ -->
 
 		<div class="articles">
 
@@ -36,7 +49,18 @@
 		</div>
 
 
+<!-- &&&&&&******$$$$$$$$$$$$$$$$ -->
+<!-- &&&&&&******$$$$$$$$$$$$$$$$ -->
+<!-- &&&&&&******$$$$$$$$$$$$$$$$ -->
+<!-- &&&&&&******$$$$$$$$$$$$$$$$ -->
+
+
+	<div class="activity">
+
 		{% include 'article/activity_component.html' %}
+	
+	</div>
+
 
 	</div>
 
