@@ -3,48 +3,97 @@
 
 {% block content %}
 
+<style>
+	
+	.article-container{
+		display: grid;
+		grid-template-columns: 3fr 1.5fr;
+	}
 
-		<h1>{{object.title}} - {{object.author}}</h1>
-		<br>
-		<h3>{{object.body}}</h3>
 
-		<br>
+</style>
+
+	
+	<div class="article-container">
 
 
-		<div class="comment-section">
+		<div class="article">
+		
+			<h1>{{object.title}} - {{object.author}}</h1>
+			<br>
+			<h3>{{object.body}}</h3>
 
-			<div class="show-comments">
-				<h2>Discussions</h2>
-				<hr>
-				{% for comment in comments %}
+			<br>
 
-					<h3>{{comment.body}} - <small>({{comment.created}})</small> </h3> <small>@{{comment.user}}</small>
-					<br>
+
+
+			
+						<h2>Discussions</h2>
+						<hr>
+						{% for comment in comments %}
+
+							<h3>{{comment.body}} - <small>({{comment.created}})</small> </h3> <small>@{{comment.user}}</small>
+							<br>
+							
+							{% if request.user == comment.user %}
+							<a href="{% url 'delete-comment' comment.id %}">delete</a>
+							{% endif %}
+
+							<hr>
+						{% endfor %}
 					
-					{% if request.user == comment.user %}
-					<a href="{% url 'delete-comment' comment.id %}">delete</a>
+
+
+					{% if request.user.is_authenticated %}
+					
+						<form method="POST" action="">
+							
+							{% csrf_token %}
+
+							<input type="text" name='body' placeholder="Write your comment here..." />
+
+						</form>
+
 					{% endif %}
-
-					<hr>
-				{% endfor %}
-			</div>
-
-
-			{% if request.user.is_authenticated %}
-			<div class="add-comment">
-				
-				<form method="POST" action="">
-					
-					{% csrf_token %}
-
-					<input type="text" name='body' placeholder="Write your comment here..." />
-
-				</form>
-
-			</div>
-			{% endif %}
 
 		</div>
 
+
+		<div class="about-publisher">
+			<h1>Publisher</h1>
+			<hr>
+			<h3>Author :	{{object.author.name}}</h3>
+			<hr>
+			<h3>Published :	{{object.created|timesince}} ago</h3>
+			<hr>
+			<h3>About :	{{object.author.about}}</h3>
+			<hr>
+
+
+			<div>
+				<h1>Similar articles</h1>
+				<hr>
+				{% for article in articles %}
+
+					{% if object.topic == article.topic %}
+
+						<a href="{% url 'article-page' article.id %}"><h3>{{article.title}}</h3></a>
+						<small>by @{{article.author.name}}</small>
+						<hr>
+					{% endif %}
+
+				{% endfor %}
+			</div>
+				
+
+
+
+
+
+		</div>
+
+
+
+	</div>
 
 {% endblock %}

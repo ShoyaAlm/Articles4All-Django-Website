@@ -16,7 +16,7 @@ class Author(models.Model):
 	about = models.CharField(max_length=500)
 	
 	def __str__(self):
-		return self.name
+		return self.about[0:20]
 
 
 

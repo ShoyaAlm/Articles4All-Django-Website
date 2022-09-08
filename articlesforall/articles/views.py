@@ -134,7 +134,7 @@ class homePageView(View):
 
 	template_name = 'article/home-page.html'
 
-	
+
 
 	def get(self, request, *args, **kwargs):
 
@@ -143,7 +143,7 @@ class homePageView(View):
 		articles = Article.objects.filter(topic__name__icontains=q)
 		
 		topics = Topic.objects.all()
-		
+
 		activity = Comment.objects.filter(Q(article__title__icontains=q))
 
 		context = {'topics': topics, 'articles': articles, 'activity': activity}
@@ -351,7 +351,9 @@ class ArticleView(View):
 
 		comments = obj.comment_set.all().order_by('-created')
 
-		context = {'object': obj, 'comments': comments}
+		articles = Article.objects.all()
+
+		context = {'object': obj, 'comments': comments, 'articles': articles}
 
 		return render(request, self.template_name, context)
 

@@ -4,7 +4,7 @@
 
 		{% for article in articles %}
 		<a href="{% url 'article-page' article.id %}"><h4>{{article.title}}</h4></a>
-		<small>{{article.comment.count}}</small>
+		<small>{{comment.count}}</small>
 		<hr>
 		{% endfor %}
 
