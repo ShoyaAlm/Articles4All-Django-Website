@@ -16,7 +16,7 @@ class Author(models.Model):
 	about = models.CharField(max_length=500)
 	
 	def __str__(self):
-		return self.about[0:20]
+		return self.name
 
 
 
@@ -36,6 +36,9 @@ class Article(models.Model):
 	updated = models.DateTimeField(auto_now=True)
 	created = models.DateTimeField(auto_now_add=True)
 
+	class Meta:
+		ordering = ['-updated', 'created']
+		
 	def __str__(self):
 		return self.title
 

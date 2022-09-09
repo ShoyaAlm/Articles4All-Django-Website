@@ -7,7 +7,7 @@
 
 	<div>
 		<h1>Update : {{object.title}} - {{object.author}} </h1>
-		<form method='POST' action=''>
+		<form method='POST' action='{% url "article-page" object.id %}'>
 			{% csrf_token %}
 
 			{{form.as_p}}

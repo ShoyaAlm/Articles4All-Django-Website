@@ -19,7 +19,12 @@
 
 		<div class="article">
 		
-			<h1>{{object.title}} - {{object.author}}</h1>
+			<h1>{{object.title}}
+			{% if request.user.username == object.author.name %}
+			- <small><a href="{% url 'update-article' object.id %}">Edit</a></small>
+			{% endif %}
+			</h1>
+			<h4>@{{object.author}}</h4>
 			<br>
 			<h3>{{object.body}}</h3>
 
@@ -32,6 +37,7 @@
 						<hr>
 						{% for comment in comments %}
 
+							
 							<h3>{{comment.body}} - <small>({{comment.created}})</small> </h3> <small>@{{comment.user}}</small>
 							<br>
 							
