@@ -144,7 +144,7 @@ class homePageView(View):
 		
 		topics = Topic.objects.all()
 
-		activity = Comment.objects.filter(Q(article__title__icontains=q))
+		activity = Comment.objects.filter(Q(article__title__icontains=q))[:3]
 
 		context = {'topics': topics, 'articles': articles, 'activity': activity}
 
@@ -176,30 +176,6 @@ class homePageView(View):
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
-
-
-
-class ArticleListView(View):
-
-	template_name = 'article/home-page.html'
-
-	query_set = Article.objects.all()
-
-
-	def get_queryset(self):
-		return self.query_set
-
-	def get(self, request, *args, **kwargs):
-
-		context = {'object': self.get_queryset()}
-
-		return render(request, self.template_name, context)
-
-
-
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
 
@@ -270,74 +246,6 @@ class ArticleListView(View):
 ####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
-
-
-class AuthorListView(View):
-
-	template_name = 'article/authors.html'
-
-
-	query_set = Author.objects.all()
-
-	def get_queryset(self):
-		return self.query_set
-
-	def get(self, request, *args, **kwargs):
-		
-		context = {'object': self.get_queryset()}
-		return render(request, self.template_name, context)
-
-
-
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-
-
-class AuthorView(View): 	
-
-	template_name = 'article/profile.html'
-
-	def get(self, request, id=None, *args, **kwargs):
-
-		if id is not None:
-			obj = get_object_or_404(Author, id=id)
-		
-		context = {'object': obj}
-
-		return render(request, self.template_name, context)
-
-
-
-
-
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-
-class ArticleListView(View):
-
-	template_name = 'article/articles.html'
-
-
-	query_set = Article.objects.all()
-
-	def get_queryset(self):
-
-		return self.query_set
-
-
-
-	def get(self, request, *args, **kwargs):
-		
-		context = {'object': self.get_queryset()}
-		return render(request, self.template_name, context)
-
-
-
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
-####<<<<<<<<<<<>>>>>>>>>>>>!!!!!!!!!!!!!%%%%%%%%%%%$$$$$$$$$$$$$$$$$$
 
 
 class ArticleView(View):
