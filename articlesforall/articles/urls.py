@@ -27,7 +27,7 @@ urlpatterns = [
 	
 	path('', homePageView.as_view(), name='home-page'),
 	
-	path('author/', AuthorListView.as_view(), name='author-page'),
+	path('author/', AuthorListView.as_view(), name='authors-page'),
 	path('author/<int:id>', AuthorView.as_view(), name='author-page'),
 
 	path('article/<int:id>', ArticleView.as_view(), name='article-page'),

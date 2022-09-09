@@ -21,7 +21,6 @@
 
 			<hr>
 		
-			{% include 'article/discussion.html' %}
 		
 		</div>
 
@@ -34,7 +33,7 @@
 
 			{% for article in articles %}
 
-				<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.topic}}</h2> <small>@{{article.author}} </small>
+				<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.topic}}</h2> <small>@{{article.author.name}} </small>
 				<br>
 
 				{% if request.user.username == article.author.name %}

@@ -9,8 +9,8 @@
 <body>
 		<h1><a href="{% url 'home-page' %}">Articles4All</a> 
 		
-		<small><a href="#">Articles</a></small>
-		<small><a href="#">Authors</a></small>
+		<small><a href="{% url 'articles-page' %}">Articles</a></small>
+		<small><a href="{% url 'authors-page' %}">Authors</a></small>
 		<small><a href="#">Contact</a></small>
 		<a href="{% url 'create-article' %}"><button>Submit article</button></a>
 		
