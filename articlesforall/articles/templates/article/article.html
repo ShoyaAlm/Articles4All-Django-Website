@@ -75,7 +75,7 @@
 				<hr>
 				{% for article in articles %}
 
-					{% if object.topic == article.topic %}
+					{% if object.topic == article.topic and object.title != article.title %}
 
 						<a href="{% url 'article-page' article.id %}"><h3>{{article.title}}</h3></a>
 						<small>by @{{article.author.name}}</small>

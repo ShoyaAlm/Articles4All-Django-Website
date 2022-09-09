@@ -4,10 +4,25 @@
 	
 	<title>Articles4All</title>
 </head>
-<body>
+<style>
+	
+	.header{
+		display: grid;
+		grid-template-rows: 1fr;
+	}
 
-		<a href="{% url 'home-page' %}"><h1>Articles4All</h1></a>
-		
+
+</style>
+<body>
+	<div class="header">
+		<h1><a href="{% url 'home-page' %}">Articles4All</a>-<h2><a href="#">Articles</a></h2>
+		<h2><a href="#">Authors</a></h2>
+		<h2><a href="#">Contact</a></h2>
+		<h2><a href="{% url 'create-article' %}"><button>Submit article</button></a></h2>
+		</h1>
+
+	</div>
+	
 		{% include 'navbar.html' %}
 			
 
