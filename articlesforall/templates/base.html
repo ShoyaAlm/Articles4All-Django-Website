@@ -6,13 +6,33 @@
 </head>
 
 
+<style>
+	
+	.header{
+		background-color: yellow;
+		font: small-caps bold 24px/1 sans-serif;
+	}
+
+
+</style>
+
 <body>
-		<h1><a href="{% url 'home-page' %}">Articles4All</a> 
-		
-		<small><a href="{% url 'articles-page' %}">Articles</a></small>
-		<small><a href="{% url 'authors-page' %}">Authors</a></small>
-		<small><a href="#">Contact</a></small>
-		<a href="{% url 'create-article' %}"><button>Submit article</button></a>
+
+	<div class="header">
+		<h1><a href="{% url 'home-page' %}"  style="text-decoration: none; color: black;">Articles4All</a> 
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
+
+		<small><a href="{% url 'articles-page' %}"  style="text-decoration: none; font-size: 30px; color: black;">Articles</a></small>&nbsp;&nbsp;&nbsp;&nbsp;
+		<small><a href="{% url 'authors-page' %}"  style="text-decoration: none; font-size: 30px; color: black;">Authors</a></small>&nbsp;&nbsp;&nbsp;&nbsp;
+		<small><a href="#"  style="text-decoration: none; font-size: 30px; color: black;">Contact</a></small>&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="{% url 'create-article' %}"  style="background-color: #008CBA; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;">Submit article</a>
 		
 		</h1>
 
@@ -37,6 +57,8 @@
 		<hr>
 
 	
+	</div>
 
 </body>
+
 </html>
