@@ -34,7 +34,7 @@
 			<hr>
 			{% for article in articles %}
 
-				<h2 style="font: 1.2em 'Fira Sans', sans-serif;"><a href="{% url 'article-page' article.id %}" style="text-decoration: none; color: green;">{{article.title}}</a> - {{article.topic}}</h2> 
+				<h2 style="font: 1.6em 'Fira Sans', sans-serif;"><a href="{% url 'article-page' article.id %}" style="text-decoration: none; color: green;">{{article.title}}</a></h2> 
 				<h4 style="font: caption">By @{{article.author.name}} - {{article.created|timesince}} ago</h4>
 				<br>
 

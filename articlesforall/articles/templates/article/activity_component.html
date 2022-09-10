@@ -1,14 +1,14 @@
 
-			<h1>Recent comments</h1>
+			<h1 style="font-family: corbel, sans-serif;">Recent comments</h1>
 			<hr>
 			{% for comment in activity %}
 
-				<small>@{{comment.user}}  - {{comment.created|timesince}} ago</small>
+				<small style="font-family: arial, sans-serif;">@{{comment.user}}  - {{comment.created|timesince}} ago</small>
 				<br>
 				<br>
-				<small>replied to artilce "{{comment.article.title}}"</small>
+				<small style="font-family: arial, sans-serif;">replied to artilce "{{comment.article.title}}"</small>
 
-				<h3>{{comment.body}}</h3>
+				<h3 style="font-family: consolas, sans-serif;">{{comment.body}}</h3>
 
 				{% if request.user.username == comment.user.username %}
 				<a href="{% url 'delete-comment' comment.id %}">delete</a>

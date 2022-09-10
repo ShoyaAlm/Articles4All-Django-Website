@@ -6,40 +6,25 @@
 <style>
 	.home-container{
 		display: grid;
-		grid-template-columns: 1fr 3fr;
+		position: fixed;
+		left: 500px;
 	}
 </style>
 
 
 <div class="home-container">
 	
-	<div class="Categories">
-		
-		<h1>Categories</h1>
-		<hr>
-
-		<a href="{% url 'home-page' %}">All</a>
-
-		{% for article in object %}
-
-			<a href="{% url 'home-page' %}?q={{article.topic.name}}">{{article.topic.name}}</a>
-			<br>
-		{% endfor %}
-
-
-
-	</div>
 
 
 
 	<div>
 	
-		<a href="{% url 'create-article' %}"><h2>Create Article</h2></a>
+		<h2 style="font-family: helvetica, sans-serif;">Latest articles</h2>
 		<hr>
 	
 	{% for article in object  %}
 
-		<h2>{{article.id}} - <a href="{% url 'article-page' article.id %}">{{article.title}}</a> - {{article.topic}}</h2> <small>@{{article.author}} </small>
+		<h2 style="font: 2em 'Fira Sans', sans-serif;"><a href="{% url 'article-page' article.id %}" style="text-decoration: none; color: green;">{{article.title}}</a> - {{article.topic}}</h2> <small>@{{article.author}} </small>
 		<br>
 
 		{% if request.user == article.author %}

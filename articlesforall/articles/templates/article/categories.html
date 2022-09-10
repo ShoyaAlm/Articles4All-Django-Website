@@ -1,27 +1,29 @@
 <div class="Categories">
-			
-			<h1>Categories</h1>
+			<div>
+				{% if request.user.is_authenticated %}
 
-			{% if request.user.is_authenticated %}
+					<h3  style="font-family: segoe ui, sans-serif; color: black;">Hello {{request.user}} !</h3>
 
-				<h3>Hello {{request.user}} !</h3>
-				<a href="{% url 'logout-page' %}">logout</a>
+					<a href="{% url 'logout-page' %}" style="text-decoration: none; color: cornflowerblue;">logout</a>
 
-			{% else %}
-				<a href="{% url 'login-page' %}">Login</a>
-			{% endif %}
+				{% else %}
+					<a href="{% url 'login-page' %}" style="font-family: candara, sans-serif ;text-decoration: none; color: cornflowerblue;">Login</a>
+				{% endif %}
+			</div>
+
+			<h1 style="font-family: corbel, sans-serif;">Categories</h1>
 			
 			<hr>
 
 
 			<div>
-				<a href="{% url 'home-page' %}">All</a>
+				<a href="{% url 'home-page' %}" style="font-family: Segoe UI, sans-serif; color: black; text-decoration: none;">All</a>
 			</div>
 
 			{% for topic in topics %}
 			
 			<div>
-				<a href="{% url 'home-page' %}?q={{topic.name}}">{{topic.name}}</a>
+				<a href="{% url 'home-page' %}?q={{topic.name}}" style="font-family: Segoe UI, sans-serif; color: forestgreen; text-decoration: none;">{{topic.name}}</a>
 				<br>
 			</div>
 			

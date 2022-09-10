@@ -31,7 +31,7 @@ class Topic(models.Model):
 class Article(models.Model):
 	title = models.CharField(max_length=50)
 	topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
-	body = models.CharField(max_length=400)
+	body = models.CharField(max_length=800)
 	author = models.ForeignKey(Author, on_delete=models.CASCADE)
 	updated = models.DateTimeField(auto_now=True)
 	created = models.DateTimeField(auto_now_add=True)
