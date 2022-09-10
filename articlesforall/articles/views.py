@@ -141,7 +141,7 @@ class homePageView(View):
 		q = request.GET.get('q') if request.GET.get('q') != None else ''
 
 		articles = Article.objects.filter(topic__name__icontains=q)
-		
+
 		topics = Topic.objects.all()
 
 		activity = Comment.objects.filter(Q(article__title__icontains=q))[:3]
