@@ -19,36 +19,37 @@
 
 		<div class="article">
 		
-			<h1>{{object.title}}
+			<h1 style="font-family: lucida sans, sans-serif; position: relative; margin-left: 300px; color: green;">{{object.title}}
 			{% if request.user.username == object.author.name %}
 			- <small><a href="{% url 'update-article' object.id %}">Edit</a></small>
 			{% endif %}
 			</h1>
-			<h4>@{{object.author}}</h4>
 			<br>
-			<h3>{{object.body}}</h3>
+			<br>
+			<br>
+			<h3 style="font: caption; margin-left: 70px; margin-right: 100px; font-size: 20px">{{object.body}}</h3>
 
 			<br>
 
 
 
-			
-						<h2>Discussions</h2>
+				<div style=" margin-left: 200px; margin-right: 200px">
+						<h2 style="font-family: arial, sans-serif;">Discussions</h2>
 						<hr>
 						{% for comment in comments %}
 
-							
-							<h3>{{comment.body}} - <small>({{comment.created}})</small> </h3> <small>@{{comment.user}}</small>
+							<h4 style="font-family: arial narrow, sans-serif;">@{{comment.user}} said :</h4>
+							<h3 style="font-family: arial, sans-serif;">{{comment.body}} <small>({{comment.created|timesince}} ago)</small> </h3> 
 							<br>
 							
 							{% if request.user == comment.user %}
-							<a href="{% url 'delete-comment' comment.id %}">delete</a>
+							<a href="{% url 'delete-comment' comment.id %}" style="text-decoration: none; color:cornflowerblue; font-family: candara, sans-serif;">delete</a>
 							{% endif %}
 
 							<hr>
 						{% endfor %}
 					
-
+				</div>
 
 					{% if request.user.is_authenticated %}
 					
