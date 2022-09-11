@@ -19,7 +19,7 @@
 			
 			{% include 'article/categories.html' %}
 
-			<hr>
+			
 		
 		
 		</div>
@@ -33,16 +33,17 @@
 			<h1 style="font: small-caps bold 25px sans-serif;">Latest articles</h1>
 			<hr>
 			{% for article in articles %}
+				<div style="flex-direction: column-reverse;">
+					<h2 style="font: 1.6em 'Fira Sans', sans-serif;"><a href="{% url 'article-page' article.id %}" style="text-decoration: none; color: green;">{{article.title}}</a></h2> 
+					<h4 style="font: caption">By @{{article.author.name}} - {{article.created|timesince}} ago</h4>
+					<br>
 
-				<h2 style="font: 1.6em 'Fira Sans', sans-serif;"><a href="{% url 'article-page' article.id %}" style="text-decoration: none; color: green;">{{article.title}}</a></h2> 
-				<h4 style="font: caption">By @{{article.author.name}} - {{article.created|timesince}} ago</h4>
-				<br>
-
-				{% if request.user.username == article.author.name %}
-				<small><a href="{% url 'update-article' article.id %}">update</a></small> - <small><a href="{% url 'delete-article' article.id %}">delete</a></small>
-				{% endif %}
-								
-				<hr>
+					{% if request.user.username == article.author.name %}
+					<small><a href="{% url 'update-article' article.id %}" style="text-decoration:none; color:slateblue; font-family: calibri, sans-serif;">update</a></small> - <small><a href="{% url 'delete-article' article.id %}" style="text-decoration:none; color:slateblue; font-family: calibri, sans-serif;">delete</a></small>
+					{% endif %}
+									
+					<hr>
+				</div>
 			{% endfor %}
 
 

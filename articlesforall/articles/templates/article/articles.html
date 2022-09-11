@@ -24,7 +24,7 @@
 	
 	{% for article in object  %}
 
-		<h2 style="font: 2em 'Fira Sans', sans-serif;"><a href="{% url 'article-page' article.id %}" style="text-decoration: none; color: green;">{{article.title}}</a> - {{article.topic}}</h2> <small>@{{article.author}} </small>
+		<h2 style="font: 2em 'Fira Sans', sans-serif;"><a href="{% url 'article-page' article.id %}" style="font-family: bahnschrift, sans-serif ;text-decoration: none; color: green;">{{article.title}}</a> - (topic : {{article.topic}})</h2> <small style="font-family: arial, sans-serif;">@{{article.author}} </small>
 		<br>
 
 		{% if request.user == article.author %}

@@ -11,7 +11,7 @@
 				<h3 style="font-family: consolas, sans-serif;">{{comment.body}}</h3>
 
 				{% if request.user.username == comment.user.username %}
-				<a href="{% url 'delete-comment' comment.id %}">delete</a>
+				<a href="{% url 'delete-comment' comment.id %}" style="text-decoration:none; color:slateblue; font-family: calibri, sans-serif;">delete</a>
 				{% endif %}
 
 				<hr>

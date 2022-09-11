@@ -13,7 +13,7 @@
 
 			<h1 style="font-family: corbel, sans-serif;">Categories</h1>
 			
-			<hr>
+			<hr style="border-top: 1px dashed #8c8b8b;">
 
 
 			<div>
@@ -22,7 +22,7 @@
 
 			{% for topic in topics %}
 			
-			<div>
+			<div style=" display: flex; flex-wrap: wrap">
 				<a href="{% url 'home-page' %}?q={{topic.name}}" style="font-family: Segoe UI, sans-serif; color: forestgreen; text-decoration: none;">{{topic.name}}</a>
 				<br>
 			</div>
